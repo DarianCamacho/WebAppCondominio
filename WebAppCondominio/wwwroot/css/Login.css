@@ -303,3 +303,6 @@ body {
     margin-top: 20px; /* Espacio entre el enlace y el botón */
 }
 
+.nav {
+    height: 50px;
+}
