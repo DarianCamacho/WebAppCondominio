@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Diagnostics;
 
-namespace CondominioApp.Controllers
+namespace WebAppCondominio.Controllers
 {
     public class HomeController : Controller
     {

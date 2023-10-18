@@ -106,7 +106,7 @@ ion-icon {
     font-size: 36px; /* Tamaño del icono (ajusta según tus preferencias) */
 }
 
-//ICONOS
+/*Iconos*/
 
 .icon-with-glow {
   position: relative;
@@ -140,3 +140,7 @@ ion-icon {
     opacity: 0.5;
   }
 }
+
+
+/*Footer*/
+
