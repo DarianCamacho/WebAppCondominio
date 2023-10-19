@@ -4,13 +4,22 @@
 
 <head>
 
-    <link rel="stylesheet" href="~/css/zephyr.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
 
 </head>
 
 <body>
-    <div class="text-center">
-        <div class="container mt-5">
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p class="mb-0 gradient-text">Welcome to the Condominium Visitor Registration</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            Get started today and ensure a smooth visit for your guests!
+        </figcaption>
+    </figure>
+
+    <div class="centered-container">
+        <div class="content-box">
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
@@ -23,9 +32,8 @@
                         </div>
                         <div class="card-body">
                             <div class="tab-content">
-                                <!-- Login Form -->
                                 <div class="tab-pane fade show active" id="visits-form">
-                                    <h2>Create Visit</h2>
+                                    <h2>Crear Visita</h2>
                                     <form asp-controller="Visitas" asp-action="Create">
                                         <div class="form-floating mb-3">
                                             <input type="number" class="form-control" id="id" name="id" required>

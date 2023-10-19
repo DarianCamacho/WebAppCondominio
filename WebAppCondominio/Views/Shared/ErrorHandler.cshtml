@@ -15,8 +15,11 @@
 	</div>
 </div> *@
 
-<div class="error-container">
-	<h2>@ViewBag.Error.Title</h2>
-	<p class="errormessage">@ViewBag.Error.ErrorMessage</p>
-	<a href="@ViewBag.Error.Path" class="action-button">@ViewBag.Error.ActionMessage</a>
+<div class="error-container" style="max-width: 40rem;">
+	<div class="card-header">Alert!</div>
+	<div class="card-body">
+		<h2>@ViewBag.Error.Title</h2>
+		<p class="errormessage">@ViewBag.Error.ErrorMessage</p>
+		<a href="@ViewBag.Error.Path" class="action-button">@ViewBag.Error.ActionMessage</a>
+	</div>
 </div>

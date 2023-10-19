@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WepAppCondominio</title>
-    <link rel="stylesheet" href="~/css/zephyr.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/zephyr.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WepAppCondominio.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/WhatsApp.css" />  
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -35,9 +35,6 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Pricing">Pricing</a>
                         </li>
                         <li class="nav-item">
@@ -51,7 +48,7 @@
                             <div class="dropdown-menu">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Visitas" asp-action="Index">Visit administration</a>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Visitas" asp-action="Visitas">Crear Visita</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Visitas" asp-action="List">Ver Visitas</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Separated link</a>
                             </div>

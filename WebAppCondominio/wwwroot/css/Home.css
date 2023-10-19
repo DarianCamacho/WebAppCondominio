@@ -21,8 +21,8 @@ figcaption.blockquote-footer {
 
 .toast {
     position: fixed;
-    top: 87%; /* Ajusta la posición verticalmente según tus necesidades */
-    right: 20px; /* Ajusta la posición horizontalmente según tus necesidades */
+    top: 79%; /* Ajusta la posición verticalmente según tus necesidades */
+    right: 2px; /* Ajusta la posición horizontalmente según tus necesidades */
     transform: translateY(-50%);
     transition: transform 0.3s linear, opacity 0.3s ease-out;
     opacity: 1;
@@ -36,12 +36,12 @@ figcaption.blockquote-footer {
 
 
 .navbar {
-    background-color: rgba(200, 200, 200, 0.8); /* Fondo gris transparente */
+    background-color: #fff;
     border-radius: 20px; /* Bordes redondeados */
 }
 
 .navbar-brand {
-    color: #333; /* Cambia el color del texto del título */
+    color: #fff; /* Cambia el color del texto del título */
 }
 
 .navbar-toggler-icon {
@@ -67,7 +67,7 @@ figcaption.blockquote-footer {
 }
 
 .navbar {
-    background-color: #191b1b0e; /* Gris muy transparente (20% de opacidad) */
+    background-color: #fff; /* Gris muy transparente (20% de opacidad) */
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -141,6 +141,15 @@ ion-icon {
   }
 }
 
+.content-box {
+    background-color: #f5f5f5; /* Fondo blanco para el contenido */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Agrega sombra al contenedor */
+}
 
-/*Footer*/
+    /* Estilos adicionales para el formulario si es necesario */
+    .content-box form {
+        /* Tus estilos personalizados para el formulario aquí */
+    }
 

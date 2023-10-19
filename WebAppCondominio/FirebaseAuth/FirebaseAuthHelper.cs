@@ -6,8 +6,8 @@ namespace WebAppCondominio.FirebaseAuth
 {
 	public static class FirebaseAuthHelper
 	{
-		public const string firebaseAppId = "";
-		public const string firebaseApiKey = "";
+		public const string firebaseAppId = "condominio-cc812";
+		public const string firebaseApiKey = "AIzaSyAUohhZ_VZsq-JzImrkMOn4ev014pG-bxc";
 
 		public static FirebaseAuthClient setFirebaseAuthClient()
 		{

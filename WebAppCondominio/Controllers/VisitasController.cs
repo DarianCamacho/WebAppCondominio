@@ -1,18 +1,60 @@
 ﻿using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAppCondominio.Models;
+using WebAppCondominio.FirebaseAuth;
+using static Google.Cloud.Firestore.V1.StructuredAggregationQuery.Types.Aggregation.Types;
+using Firebase.Storage;
+using System.Collections.Generic;
 
 namespace WebAppCondominio.Controllers
 {
     public class VisitasController : Controller
     {
         // GET: VisitasController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+                return RedirectToAction("Index", "Error");
+
+            return await GetVisitas();
+        }
+
+        private async Task<IActionResult> GetVisitas()
+        {
+            List<Visitas> visitasList = new List<Visitas>();
+            Query query = FirestoreDb.Create("condominio-cc812").Collection("Visitas");
+            QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+
+            foreach (var item in querySnapshot)
+            {
+                Dictionary<string, object> data = item.ToDictionary();
+
+                visitasList.Add(new Visitas
+                {
+                    Cedula = data["id"].ToString(),
+                    Nombre = data["name"].ToString(),
+                    Vehiculo = data["vehicle"].ToString(),
+                    Marca = data["brand"].ToString(),
+                    Modelo = data["model"].ToString(),
+                    Color = data["color"].ToString(),
+                    Fecha = data["date"].ToString()
+                });
+            }
+
+            ViewBag.Visitas = visitasList;
+
+            return View("List");
+        }
+
+
+
+        public ActionResult Visitas()
         {
             return View();
         }
 
-        public ActionResult Visitas()
+        public ActionResult List()
         {
             return View();
         }
@@ -49,11 +91,20 @@ namespace WebAppCondominio.Controllers
                                 { "Fecha", date },
                             });
 
-                return View("Index");
+                return await GetVisitas();
             }
-            catch
+
+            catch (FirebaseStorageException ex)
             {
-                return View();
+                ViewBag.Error = new ErrorHandler()
+                {
+                    Title = ex.Message,
+                    ErrorMessage = ex.InnerException?.Message,
+                    ActionMessage = "Go to Visitas",
+                    Path = "/Visitas"
+                };
+
+                return View("ErrorHandler");
             }
         }
 

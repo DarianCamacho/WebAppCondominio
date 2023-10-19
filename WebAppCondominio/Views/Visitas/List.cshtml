@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "List";
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Home.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+
+        <div class="card">
+            <div class="card-header">
+                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Vehiculo</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var @item in @ViewBag.Visitas)
+                        {
+                            <tr>
+                                <td>@item.Cedula</td>
+                                <td>$@item.Nombre</td>
+                                <td>@item.Vehiculo</td>
+                                <td>@item.Marca</td>
+                                <td>@item.Modelo</td>
+                                <td>@item.Color</td>
+                                <td>@item.Fecha</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</body>
