@@ -71,7 +71,10 @@
 
                     <div class="dropdown" style="width: 200px;">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" style="width: 200px;" aria-expanded="false">
-                            @ViewBag.User.Name
+                            @if (ViewBag.User != null)
+                            {
+                                @ViewBag.User.Name
+                            }
                         </button>
                         <ul class="dropdown-menu" style="width: 200px; margin-top: 10px;">
                             <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>

@@ -31,7 +31,18 @@ namespace WebAppCondominio.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        public async Task<IActionResult> Login(string loginUsername, string loginPassword)
+		public IActionResult GetUserName()
+		{
+			// Leemos de la sesión los datos del usuario
+			Models.User? user = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
+			// Pasamos el nombre de usuario a la vista
+			ViewBag.UserName = user?.Name;
+
+			return View("Index");
+		}
+
+		public async Task<IActionResult> Login(string loginUsername, string loginPassword)
 		{
 			try
 			{
@@ -70,6 +81,7 @@ namespace WebAppCondominio.Controllers
 		{
 			try
 			{
+
 				//Aqui Firebase crea el usuario en Firebase Auth 
 				UserCredential taskUser = await FirebaseAuthHelper.setFirebaseAuthClient().
 					CreateUserWithEmailAndPasswordAsync(signupUsername, signupPassword, signupDisplayName);
