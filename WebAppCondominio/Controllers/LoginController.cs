@@ -22,12 +22,16 @@ namespace WebAppCondominio.Controllers
 			return View();
 		}
 
-		public IActionResult Logout()
-		{
-			return View();
-		}
+        public IActionResult Logout()
+        {
+            // Elimina los datos de sesión
+            HttpContext.Session.Remove("userSession");
 
-		public async Task<IActionResult> Login(string loginUsername, string loginPassword)
+            // Redirige al usuario a la página de inicio de sesión (o a donde desees)
+            return RedirectToAction("Index", "Login");
+        }
+
+        public async Task<IActionResult> Login(string loginUsername, string loginPassword)
 		{
 			try
 			{

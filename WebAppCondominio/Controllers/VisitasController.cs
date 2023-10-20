@@ -6,6 +6,7 @@ using WebAppCondominio.FirebaseAuth;
 using static Google.Cloud.Firestore.V1.StructuredAggregationQuery.Types.Aggregation.Types;
 using Firebase.Storage;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace WebAppCondominio.Controllers
 {
@@ -14,6 +15,8 @@ namespace WebAppCondominio.Controllers
         // GET: VisitasController
         public async Task<IActionResult> Index()
         {
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("Index", "Error");
 
@@ -21,8 +24,24 @@ namespace WebAppCondominio.Controllers
             return await GetVisits();
         }
 
+        public IActionResult GetUserName()
+        {
+
+
+
+            // Leemos de la sesión los datos del usuario
+            Models.User? user = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
+            // Pasamos el nombre de usuario a la vista
+            ViewBag.UserName = user?.Name;
+
+            return View();
+        }
+
         public async Task<IActionResult> List()
         {
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("List", "Error");
 
@@ -96,6 +115,8 @@ namespace WebAppCondominio.Controllers
 
         public ActionResult Visitas()
         {
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
             return View();
         }
     }

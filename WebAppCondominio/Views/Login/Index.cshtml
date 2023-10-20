@@ -1,8 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = null;
 }
+
 <head>
     <link rel="stylesheet" href="~/css/Login.css" />
+
 </head>
 
 <body>
@@ -14,9 +17,6 @@
             <div class="container a-container" id="a-container">
                 <form form asp-controller="Login" asp-action="SignUp">
                     <h2 class="form_title title">Create Account</h2>
-                    <div class="form__icons">
-                        <ion-icon name="person-outline" style="color: black"></ion-icon>
-                    </div>
                     <span class="form__span">or use email for registration</span>
                     <input class="form__input" type="text" placeholder="Name" id="signupDisplayName" name="signupDisplayName" required>
                     <input class="form__input" type="text" placeholder="Email" id="signupUsername" name="signupUsername" required>
@@ -30,10 +30,6 @@
             <div class="container b-container" id="b-container">
                 <form form asp-controller="Login" asp-action="Login">
                     <h2 class="form_title title">Sign in to Website</h2>
-                    <div class="form__icons">
-                        <ion-icon name="planet-outline" style="color: white !important" class="icon-with-glow"></ion-icon>
-                        <img class="form__icon" src="">
-                    </div>
                     <span class="form__span">or use your email account</span>
                     <input type="email" class="form__input" placeholder="Email" id="LoginUsername" name="loginUsername" required>
                     <input class="form__input" type="password" placeholder="Password" id="loginPassword" name="loginPassword" required>

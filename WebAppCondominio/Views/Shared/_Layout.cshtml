@@ -4,13 +4,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WepAppCondominio</title>
+
+    <link rel="stylesheet" href="~/css/Home.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/zephyr.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WepAppCondominio.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/WhatsApp.css" />  
+    <link rel="stylesheet" href="~/css/WhatsApp.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/Home.css" />
+    <style>
+
+        .dropdown:hover .btn-secondary {
+            background-color: white;
+            color: black;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: white;
+            color: black;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -34,9 +48,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="Visitas">Visit administration</a></li>
                         <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="Index">Crear Visita</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="Lista">Lista de Visitas</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="List">Lista de Visitas</a></li>
                     </ul>
                 </div>
 
@@ -56,18 +68,22 @@
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     </form>
-                    
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    <div class="dropdown" style="width: 200px;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" style="width: 200px;" aria-expanded="false">
                             @ViewBag.User.Name
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="width: 200px; margin-top: 10px;">
                             <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Login" asp-action="Logout">
+                                    <ion-icon name="log-out-outline" style="font-size: 1rem; vertical-align: middle; color: black;"></ion-icon> Log Out
+                                </a>
+                            </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
         </nav>

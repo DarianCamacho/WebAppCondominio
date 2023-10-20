@@ -47,14 +47,14 @@ namespace WebAppCondominio.Controllers
 			using (var streamToFb = System.IO.File.OpenRead(photoPath))
 			{
 				//Mandamos la foto a Firebase storage y este nos reponde la URL
-				downloadUrl = await new FirebaseStorage($"{FirebaseAuthHelper.firebaseAppId}.appspot.com")
+				downloadUrl = await new FirebaseStorage("condominio-cc812.appspot.com")
 								 .Child("ProfilePhotos")
 								 .Child(photo.FileName)
 								 .PutAsync(streamToFb);
 			}
 
 			//Actualizamos en Firestore Database el campo PhotoPath con la URL que nos devolvio Firebase Storage
-			FirestoreDb db = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId);
+			FirestoreDb db = FirestoreDb.Create("condominio-cc812");
 			DocumentReference docRef = db.Collection("Users").Document(user?.DocumentId);
 			Dictionary<string, object> dataToUpdate = new Dictionary<string, object>
 			{
