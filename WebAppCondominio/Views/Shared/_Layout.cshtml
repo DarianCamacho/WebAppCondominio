@@ -19,16 +19,27 @@
 
     <header>
 
-        <a href="https://api.whatsapp.com/send?phone=+50672996374&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n." class="float" target="_blank">
-            <i class="fa fa-whatsapp my-float" style="color: white !important;"></i>
-        </a>
-
         <nav class="navbar navbar-expand-lg bg-body-tertiary" style="color: black !important">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="color: cornflowerblue">Condiminio Escazú</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor04" aria-controls="navbarColor04" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <!-- Example single secondary button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Visitas
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="Visitas">Visit administration</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="Index">Crear Visita</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Visitas" asp-action="Lista">Lista de Visitas</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+
                 <div class="collapse navbar-collapse" id="navbarColor04">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
@@ -40,32 +51,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">SistemaV</a>
-                            <div class="dropdown-menu">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Visitas" asp-action="Index">Visit administration</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Visitas" asp-action="Visitas">Crear Visita</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Visitas" asp-action="List">Ver Visitas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
                     </ul>
+
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     </form>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Sign in</a>
-                    <div class="ml-2">
-                        <p>⠀⠀</p>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @ViewBag.User.Name
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
                     </div>
-                    <div class="ml-2">
-                        <!-- Agregamos un margen a la izquierda para separar los botones -->
-                        <a class="btn btn-outline-dark" asp-area="" asp-controller="Login" asp-action="SignUp">Sign up</a>
 
-                    </div>
                 </div>
             </div>
         </nav>

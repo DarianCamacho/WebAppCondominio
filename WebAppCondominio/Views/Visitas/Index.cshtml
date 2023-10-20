@@ -1,86 +1,162 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿﻿@{
+    ViewData["Title"] = "Index";
 }
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
 
-    <link rel="stylesheet" href="~/css/Visitas.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
 </head>
 
 <body>
-
     <figure class="text-center">
         <blockquote class="blockquote">
-            <p class="mb-0">Bienvenido al Sistema de Visitas, tu puerta de entrada a la comodidad y la gestión de tu hogar.</p>
+            <p class="mb-0 gradient-text">Welcome to the Condominium Visitor Registration</p>
         </blockquote>
         <figcaption class="blockquote-footer">
-            Puedes crear y administrar tus visitas desde aquí <cite title="Portal de Condominio">AVC</cite>
+            Get started today and ensure a smooth visit for your guests!
         </figcaption>
     </figure>
 
-    @*
-    <div class="cuadrado">
-        <div class="myCard">
-            <div class="innerCard">
-                <div class="frontSide">
-                    <p class="title">FRONT SIDE</p>
-                    <p>Hover Me</p>
-                </div>
-                <div class="backSide">
-                    <p class="title">BACK SIDE</p>
-                    <p>Leave Me</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    *@
-
-    <div>
-        <a asp-area="" asp-controller="Visitas" asp-action="Favourites">
-        <div class="cuadrado">
-            <div class="card">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="38px" width="38px" version="1.1" id="heart" viewBox="0 0 471.701 471.701" xml:space="preserve">
-                        <linearGradient id="gradientColor">
-                            <stop offset="5%" stop-color="#7eaaff"></stop>
-                            <stop offset="95%" stop-color="#ff48fb"></stop>
-                        </linearGradient>
-                        <g>
-                            <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z"></path>
-                        </g>
-                     </svg>
-                </div>
-                <p class="title">Favourites</p>
-                <p class="text">Check all your favourites in one place.</p>
-            </div>
-        </div>
-        </a>
-        <a asp-area="" asp-controller="Visitas" asp-action="Favourites">
-            <div class="cuadrado">
-                <div class="card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="38px" width="38px" version="1.1" id="user" viewBox="0 0 512 512" xml:space="preserve">
-                        <linearGradient id="gradientColor">
-                        <stop offset="5%" stop-color="#7eaaff"></stop>
-                        <stop offset="95%" stop-color="#ff48fb"></stop>
-                        </linearGradient>
-                        <g>
-                            <path d="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"></path>
-                        </g>
-                     </svg>
+    <div class="centered-container">
+        <div class="content-box">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Ir a la Página de Inicio</a>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#visits-form">Visits</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="visits-form">
+                                    <h2>Crear Visita</h2>
+                                    <form asp-controller="Visitas" asp-action="Create">
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" id="id" name="id" required>
+                                            <label for="id">Cedula:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" name="name" required>
+                                            <label for="name">Nombre:</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="vehicleSwitch">
+                                            <label class="form-check-label" for="vehicleSwitch">¿Viene en vehículo?</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="vehicle" name="vehicle" required>
+                                            <label for="vehicle">Tipo de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="brand" name="brand" required>
+                                            <label for="brand">Marca de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="model" name="model" required>
+                                            <label for="model">Modelo de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="color" name="color" required>
+                                            <label for="color">Color de vehículo:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="date" class="form-control" id="date" name="date" required>
+                                            <label for="date">Fecha de visita:</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="title">Favourites</p>
-                    <p class="text">Check all your favourites in one place.</p>
                 </div>
             </div>
-        </a>
+        </div>
+
+        <div class="centered-container">
+        <figure class="text-center">
+            <blockquote class="blockquote">
+                <p class="mb-0"></p>
+            </blockquote>
+        </figure>
+        </div>
+
+        <div class="centered-container">
+            <div class="content-box">
+                <div class="card">
+                    <div class="card-header">
+                        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cedula</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Vehiculo</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Modelo</th>
+                                    <th scope="col">Color</th>
+                                    <th scope="col">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
+                                @if (ViewBag.Visits != null)
+                                {
+                                    @foreach (var @item in @ViewBag.Visits)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Vehicle</td>
+                                            <td>@item.Brand</td>
+                                            <td>@item.Model</td>
+                                            <td>@item.Color</td>
+                                            <td>@item.Date</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Include Bootstrap and JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Escuchar el cambio en el switch de vehículo
+                $('#vehicleSwitch').change(function () {
+                    var isChecked = $(this).prop('checked');
+
+                    // Habilitar o deshabilitar campos de vehículo según el estado del switch
+                    if (isChecked) {
+                        $('#vehicle, #brand, #model, #color').prop('disabled', false);
+                    } else {
+                        $('#vehicle, #brand, #model, #color').prop('disabled', true);
+                    }
+                });
+            });
+        </script>
     </div>
-
-
 </body>
-
-</html>

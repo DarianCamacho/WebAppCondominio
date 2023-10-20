@@ -17,57 +17,43 @@ namespace WebAppCondominio.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("Index", "Error");
 
-            return await GetVisitas();
+            //Muestra el get en la visa
+            return await GetVisits();
         }
 
-        private async Task<IActionResult> GetVisitas()
+        public async Task<IActionResult> List()
         {
-            List<Visitas> visitasList = new List<Visitas>();
-            Query query = FirestoreDb.Create("condominio-cc812").Collection("Visitas");
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+                return RedirectToAction("List", "Error");
+
+            //Muestra el get en la visa
+            return await GetVisits();
+        }
+
+        private async Task<IActionResult> GetVisits()
+        {
+            List<Visit> visitsList = new List<Visit>();
+            Query query = FirestoreDb.Create("condominio-cc812").Collection("Visits");
             QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
 
             foreach (var item in querySnapshot)
             {
                 Dictionary<string, object> data = item.ToDictionary();
 
-                visitasList.Add(new Visitas
+                visitsList.Add(new Visit
                 {
-                    Cedula = data["id"].ToString(),
-                    Nombre = data["name"].ToString(),
-                    Vehiculo = data["vehicle"].ToString(),
-                    Marca = data["brand"].ToString(),
-                    Modelo = data["model"].ToString(),
-                    Color = data["color"].ToString(),
-                    Fecha = data["date"].ToString()
+                    Id = data["Id"].ToString(),
+                    Name = data["Name"].ToString(),
+                    Vehicle = data["Vehicle"].ToString(),
+                    Brand = data["Brand"].ToString(),
+                    Model = data["Model"].ToString(),
+                    Color = data["Color"].ToString(),   
+                    Date = data["Date"].ToString()
                 });
             }
 
-            ViewBag.Visitas = visitasList;
+            ViewBag.Visits = visitsList;
 
-            return View("List");
-        }
-
-
-
-        public ActionResult Visitas()
-        {
-            return View();
-        }
-
-        public ActionResult List()
-        {
-            return View();
-        }
-
-        // GET: VisitasController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: VisitasController/Create
-        public ActionResult Create()
-        {
             return View();
         }
 
@@ -80,18 +66,18 @@ namespace WebAppCondominio.Controllers
             {
                 DocumentReference addedDocRef =
                     await FirestoreDb.Create("condominio-cc812")
-                        .Collection("Visitas").AddAsync(new Dictionary<string, object>
+                        .Collection("Visits").AddAsync(new Dictionary<string, object>
                             {
-                                { "Cedula",id },
-                                { "Nombre", name },
-                                { "Vehiculo", vehicle },
-                                { "Marca",brand },
-                                { "Modelo", model },
+                                { "Id", id },
+                                { "Name", name },
+                                { "Vehicle", vehicle },
+                                { "Brand",  brand },
+                                { "Model", model },
                                 { "Color", color },
-                                { "Fecha", date },
+                                { "Date", date },
                             });
 
-                return await GetVisitas();
+                return await GetVisits();
             }
 
             catch (FirebaseStorageException ex)
@@ -108,46 +94,9 @@ namespace WebAppCondominio.Controllers
             }
         }
 
-        // GET: VisitasController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Visitas()
         {
             return View();
-        }
-
-        // POST: VisitasController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: VisitasController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: VisitasController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
