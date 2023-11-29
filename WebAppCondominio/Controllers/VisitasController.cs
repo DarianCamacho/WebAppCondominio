@@ -15,18 +15,28 @@ namespace WebAppCondominio.Controllers
         // GET: VisitasController
         public async Task<IActionResult> Index()
         {
-            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+            //ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
+            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+            //    return RedirectToAction("Index", "Error");
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("Index", "Error");
 
-            //Muestra el get en la visa
+            Models.User? user = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
+            //Si el usuario tiene un rol de 0 no se podra ver el Index de Visitas
+            //if (user.Role == 0)
+            //    return RedirectToAction("Index", "Error");
+
+            //ViewBag.Role = user.Role;
+
+            //Muestra el get en la vista
             return await GetVisits();
         }
 
         public IActionResult GetUserName()
         {
-
 
 
             // Leemos de la sesión los datos del usuario
@@ -52,7 +62,7 @@ namespace WebAppCondominio.Controllers
         private async Task<IActionResult> GetVisits()
         {
             List<Visit> visitsList = new List<Visit>();
-            Query query = FirestoreDb.Create("condominio-cc812").Collection("Visits");
+            Query query = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId).Collection("Visits");
             QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
 
             foreach (var item in querySnapshot)
@@ -66,7 +76,7 @@ namespace WebAppCondominio.Controllers
                     Vehicle = data["Vehicle"].ToString(),
                     Brand = data["Brand"].ToString(),
                     Model = data["Model"].ToString(),
-                    Color = data["Color"].ToString(),   
+                    Color = data["Color"].ToString(),
                     Date = data["Date"].ToString()
                 });
             }
@@ -84,7 +94,7 @@ namespace WebAppCondominio.Controllers
             try
             {
                 DocumentReference addedDocRef =
-                    await FirestoreDb.Create("condominio-cc812")
+                    await FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId)
                         .Collection("Visits").AddAsync(new Dictionary<string, object>
                             {
                                 { "Id", id },
@@ -114,6 +124,13 @@ namespace WebAppCondominio.Controllers
         }
 
         public ActionResult Visitas()
+        {
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
+            return View();
+        }
+
+        public ActionResult EasyPass()
         {
             ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
