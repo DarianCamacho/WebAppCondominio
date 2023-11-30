@@ -1,5 +1,5 @@
-﻿﻿@{
-    ViewData["Title"] = "List";
+﻿﻿﻿@{
+    ViewData["Title"] = "Index";
 }
 
 <head>
@@ -60,44 +60,41 @@
                 <div class="card-header">
                     <input class="form-control" id="myInput" type="text" placeholder="Search..">
                 </div>
-                @foreach (var @item in @ViewBag.Visits)
+                @foreach (var @item in @ViewBag.Users)
                 {
                     <div class="card mb-3">
-                        <h3 class="card-header">Visita</h3>
-                        <svg href="" class="d-block user-select-none" width="100%" height="50" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
-                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">@item.Id</text>
-                        </svg>
+                        <h3 class="card-header">User</h3>
+                        <fieldset disabled="">
+                            <input class="form-control" id="disabledInput" type="text" placeholder="@item.Id" disabled="">
+                        </fieldset>
+                        <img src="@item.PhotoPath" class="d-block user-select-none" width="200" height="200" alt="Image cap" />
                         <div class="card-body">
                             <h5 class="card-title">Nombre</h5>
                             <h6 class="card-subtitle text-muted">@item.Name</h6>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-text">Cedula</h5>
-                            <p class="card-title">@item.Cedula</p>
+                            <h5 class="card-text">Email</h5>
+                            <p class="card-title">@item.Email</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">@item.Brand</li>
-                            <li class="list-group-item">@item.Model</li>
-                            <li class="list-group-item">@item.Vehicle</li>
-                            <li class="list-group-item">@item.Color</li>
+                            <li class="list-group-item"><strong>Role:</strong> @item.Role</li>
+                            <li class="list-group-item"><strong>Home Code:</strong> @item.HomeCode</li>
+                            <li class="list-group-item"><strong>Phone:</strong> @item.Phone</li>
+                            <li class="list-group-item"><strong>Placa Libre:</strong> @item.PlacaLibre</li>
+                            <li class="list-group-item"><strong>Cedula:</strong> @item.Cedula</li>
                         </ul>
                         <div class="options">
-                            <div class="option">
+@*                             <div class="option">
                                 <a class="btn btn-primary" href="#" onclick="window.location='/Visitas/Edit/@item.Id?Cedula=@item.Cedula&Name=@item.Name&Vehicle=@item.Vehicle&Brand=@item.Brand&Model=@item.Model&Color=@item.Color&Date=@item.Date'">Editar</a>
-                            </div>
+                        </div> *@
                             <div class="option">
-                                <form id="deleteForm-@item.Cedula" asp-controller="Visitas" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
+                                <form id="deleteForm-@item.Email" asp-controller="Admin" asp-action="Delete" asp-route-userId="@item.Id" method="post">
                                     <a type="submit" value="Delete" class="btn btn-danger delete-button" href="#">Delete</a>
                                 </form>
                             </div>
                         </div>
                         <div class="card-footer text-muted">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-week" viewBox="0 0 16 16">
-                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
-                                <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
-                            </svg>
-                            @item.Date
+
                         </div>
                     </div>
                     <!-- Modal de Confirmación de Eliminación -->
@@ -111,11 +108,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ¿Estás seguro de que deseas eliminar esta visita?
+                                    ¿Estás seguro de que deseas eliminar este usuario?
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                    <form asp-controller="Admin" asp-action="Delete" asp-route-userId="@item.Id" method="post">
+                                    <form asp-controller="Admin" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
                                         <input type="submit" value="Sí, Eliminar" class="btn btn-danger" />
                                     </form>
                                 </div>
@@ -127,7 +124,7 @@
         </div>
         <p></p>
         <div>
-            <button id="myButton" class="Mybutton" data-url="/Visitas/Visitas">
+            <button id="myButton" class="Mybutton" data-url="/Home">
                 Volver
             </button>
         </div>
@@ -162,7 +159,7 @@
                 var form = $(this);
 
                 // Mostrar una ventana modal de confirmación antes de enviar el formulario
-                if (confirm("¿Estás seguro de que deseas eliminar esta visita?")) {
+                if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
                     // Si el usuario confirma, envía el formulario
                     form.off("submit").submit();
                 }

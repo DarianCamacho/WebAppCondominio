@@ -108,7 +108,7 @@ namespace WebAppCondominio.Controllers
                                 { "Id", taskUser.User.Uid },
                                 { "Name", taskUser.User.Info.DisplayName },
                                 { "Email", taskUser.User.Info.Email },
-                                { "PhotoPath", "" },
+                                { "PhotoPath", "https://firebasestorage.googleapis.com/v0/b/condominio-cc812.appspot.com/o/ProfilePhotos%2FUser.png?alt=media&token=5bcaab2c-aeb1-4184-9955-fe91218f8b75" },
                                 {"Role", 0},
                                 {"Logo", "" },
                                 {"HomeCode", "" },

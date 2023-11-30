@@ -47,14 +47,21 @@ namespace WebAppCondominio.Controllers
             using (var streamToFb = System.IO.File.OpenRead(photoPath))
             {
                 //Mandamos la foto a Firebase storage y este nos reponde la URL
-                downloadUrl = await new FirebaseStorage(FirebaseAuthHelper.firebaseAppId)
+                downloadUrl = await new FirebaseStorage($"{FirebaseAuthHelper.firebaseAppId}.appspot.com")
                                  .Child("ProfilePhotos")
                                  .Child(photo.FileName)
                                  .PutAsync(streamToFb);
             }
 
-            //Subir cedula
+            ////Subir cedula
+            //private IActionResult GetInfo()
+            //{
+            //    ProfilesHandler profilesHandler = new ProfilesHandler();
 
+            //    ViewBag.Profile = ProfilesHandler.GetInfoCollection().Result;
+
+            //    return View();
+            //}
 
 
             //Actualizamos en Firestore Database el campo PhotoPath con la URL que nos devolvio Firebase Storage

@@ -163,7 +163,7 @@ namespace WebAppCondominio.Controllers
             catch (Exception ex)
             {
                 // Manejar errores
-                Console.WriteLine("Error al eliminar tarjeta: " + ex.Message);
+                Console.WriteLine("Error al eliminar visita: " + ex.Message);
                 return View();
             }
         }
