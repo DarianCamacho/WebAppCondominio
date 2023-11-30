@@ -12,5 +12,6 @@
         public string? HomeCode { get; set; }
         public string? Phone { get; set; }
         public string? PlacaLibre { get; set; }
+        public string? Cedula { get; set; }
     }
 }

@@ -69,6 +69,7 @@ namespace WebAppCondominio.Controllers
                     HomeCode = data["HomeCode"].ToString(),
                     Phone = data["Phone"].ToString(),
                     PlacaLibre = data["PlacaLibre"].ToString(),
+                    Cedula = data["Cedula"].ToString(),
                 };
 
                 //Aqui guardamos los datos del usuario en la session en formato json
@@ -113,6 +114,7 @@ namespace WebAppCondominio.Controllers
                                 {"HomeCode", "" },
                                 {"Phone", "" },
                                 {"PlacaLibre", "" },
+                                {"Cedula", "" },
                             });
 
                 //Aqui actualizamos el usuario en Firestore Database para actualizar el DocumentId

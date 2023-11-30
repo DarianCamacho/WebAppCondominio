@@ -1,19 +1,16 @@
-﻿using Google.Cloud.Firestore;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebAppCondominio.Models;
-using WebAppCondominio.FirebaseAuth;
-using static Google.Cloud.Firestore.V1.StructuredAggregationQuery.Types.Aggregation.Types;
 using Firebase.Storage;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using Google.Cloud.Firestore;
+using WebAppCondominio.FirebaseAuth;
 
 namespace WebAppCondominio.Controllers
 {
     public class VisitasController : Controller
     {
         // GET: VisitasController
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
@@ -23,7 +20,7 @@ namespace WebAppCondominio.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("Index", "Error");
 
-            Models.User? user = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
             //Si el usuario tiene un rol de 0 no se podra ver el Index de Visitas
             //if (user.Role == 0)
@@ -32,7 +29,7 @@ namespace WebAppCondominio.Controllers
             //ViewBag.Role = user.Role;
 
             //Muestra el get en la vista
-            return await GetVisits();
+            return GetVisits();
         }
 
         public IActionResult GetUserName()
@@ -48,65 +45,39 @@ namespace WebAppCondominio.Controllers
             return View();
         }
 
-        public async Task<IActionResult> List()
+        public IActionResult List()
         {
             ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("List", "Error");
 
-            //Muestra el get en la visa
-            return await GetVisits();
+            //Muestra el get en la vista
+            return GetVisits();
         }
 
-        private async Task<IActionResult> GetVisits()
+
+        private IActionResult GetVisits()
         {
-            List<Visit> visitsList = new List<Visit>();
-            Query query = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId).Collection("Visits");
-            QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+            VisitsHandler visitsHandler = new VisitsHandler();
 
-            foreach (var item in querySnapshot)
-            {
-                Dictionary<string, object> data = item.ToDictionary();
-
-                visitsList.Add(new Visit
-                {
-                    Id = data["Id"].ToString(),
-                    Name = data["Name"].ToString(),
-                    Vehicle = data["Vehicle"].ToString(),
-                    Brand = data["Brand"].ToString(),
-                    Model = data["Model"].ToString(),
-                    Color = data["Color"].ToString(),
-                    Date = data["Date"].ToString()
-                });
-            }
-
-            ViewBag.Visits = visitsList;
+            ViewBag.Visits = visitsHandler.GetVisitsCollection().Result;
 
             return View();
         }
 
-        // POST: VisitasController/Create  
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, string name, string vehicle, string brand, string model, string color, string date)
+        public IActionResult Create( string cedula, string name, string vehicle, string brand, string model, string color, string date)
         {
             try
             {
-                DocumentReference addedDocRef =
-                    await FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId)
-                        .Collection("Visits").AddAsync(new Dictionary<string, object>
-                            {
-                                { "Id", id },
-                                { "Name", name },
-                                { "Vehicle", vehicle },
-                                { "Brand",  brand },
-                                { "Model", model },
-                                { "Color", color },
-                                { "Date", date },
-                            });
+                VisitsHandler visitsHandler = new VisitsHandler();
 
-                return await GetVisits();
+                bool result = visitsHandler.Create( cedula, name, vehicle, brand, model, color, date).Result;
+
+                return GetVisits();
             }
 
             catch (FirebaseStorageException ex)
@@ -115,11 +86,85 @@ namespace WebAppCondominio.Controllers
                 {
                     Title = ex.Message,
                     ErrorMessage = ex.InnerException?.Message,
-                    ActionMessage = "Go to Visitas",
+                    ActionMessage = "Go back",
                     Path = "/Visitas"
                 };
 
                 return View("ErrorHandler");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditVisit(string id, string cedula, string name, string vehicle, string brand, string model, string color, string date)
+        {
+            try
+            {
+                VisitsHandler visitsHandler = new VisitsHandler();
+
+                bool result = visitsHandler.Edit(id, cedula, name, vehicle, brand, model, color, date).Result;
+
+                return GetVisits();
+            }
+
+            catch (FirebaseStorageException ex)
+            {
+                ViewBag.Error = new ErrorHandler()
+                {
+                    Title = ex.Message,
+                    ErrorMessage = ex.InnerException?.Message,
+                    ActionMessage = "Go to index",
+                    Path = "/List"
+                };
+
+                return View("ErrorHandler");
+            }
+        }
+
+        public IActionResult Edit(string id, string cedula, string name, string vehicle, string brand, string model, string color, string date)
+        {
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+
+            Visit edited = new Visit
+            {
+                Id = id,
+                Cedula = cedula,
+                Name = name,
+                Vehicle = vehicle,
+                Brand = brand,
+                Model = model,
+                Color = color,
+                Date = date
+            };
+
+            ViewBag.Edited = edited;
+
+            //Muestra el get en la vista
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string VisitId)
+        {
+            try
+            {
+                // Primero, obtén la referencia al documento de la tarjeta que deseas eliminar en Firebase
+                var cardDocRef = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId)
+                    .Collection("Visits")
+                    .Document(VisitId);
+
+                // Borra el documento de la tarjeta
+                await cardDocRef.DeleteAsync();
+
+                // Redirige a la vista principal (Index) después de eliminar la tarjeta
+                return RedirectToAction("List", "Visitas");
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores
+                Console.WriteLine("Error al eliminar tarjeta: " + ex.Message);
+                return View();
             }
         }
 

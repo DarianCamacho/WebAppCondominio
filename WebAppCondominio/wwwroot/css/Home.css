@@ -153,3 +153,8 @@ ion-icon {
         /* Tus estilos personalizados para el formulario aquí */
     }
 
+
+.option{
+    margin: 1em;
+    float: left;
+}

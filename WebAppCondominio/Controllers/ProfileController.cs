@@ -55,6 +55,8 @@ namespace WebAppCondominio.Controllers
 
             //Subir cedula
 
+
+
             //Actualizamos en Firestore Database el campo PhotoPath con la URL que nos devolvio Firebase Storage
             FirestoreDb db = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId);
             DocumentReference docRef = db.Collection("Users").Document(user?.DocumentId);
