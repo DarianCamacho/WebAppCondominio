@@ -1,4 +1,5 @@
-﻿using Google.Cloud.Firestore;
+﻿using Firebase.Storage;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebAppCondominio.FirebaseAuth;
@@ -15,7 +16,25 @@ namespace WebAppCondominio.Controllers
 
 			ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
-			return GetUsers();
+            if (ViewBag.User is Models.User user)
+            {
+                if (user.Role != 1)
+                {
+                    //Redirige a la página de error si el usuario no tiene un rol válido
+
+                    return RedirectToAction("Index", "Error");
+                }
+
+                ViewBag.Role = user.Role;
+            }
+            else
+            {
+                //Redirigir a la pagina que se selecciono
+
+                return RedirectToAction("Index", "Admin");
+            }
+
+            return GetUsers();
 		}
 
 		public IActionResult GetUserName()
@@ -37,7 +56,7 @@ namespace WebAppCondominio.Controllers
 
 			ViewBag.Users = usersHandler.GetUsersCollection().Result;
 
-			return View();
+			return View("Index");
 		}
 
         [HttpPost]
@@ -64,6 +83,96 @@ namespace WebAppCondominio.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(string UserId, string cedula, string name, string role, string homecode, string phone, string placalibre)
+        {
+            try
+            {
+                // First, get a reference to the document of the visit you want to edit in Firebase
+                var cardDocRef = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId)
+                    .Collection("Users")
+                    .Document(UserId);
+
+                // Create a dictionary to hold the updated visit data
+                var updatedUserData = new Dictionary<string, object>()
+                {
+                    { "Cedula", cedula },
+                    { "Name", name },
+                    { "Role", role },
+                    { "HomeCode", homecode },
+                    { "Phone", phone },
+                    { "PlacaLibre", placalibre }
+                };
+
+                // Update the visit document with the updated data
+                await cardDocRef.UpdateAsync(updatedUserData);
+
+                // Redirect to the List view after editing the visit
+                return RedirectToAction("Index", "Admin");
+            }
+            catch (FirebaseStorageException ex)
+            {
+                ViewBag.Error = new ErrorHandler()
+                {
+                    Title = ex.Message,
+                    ErrorMessage = ex.InnerException?.Message,
+                    ActionMessage = "Go back",
+                    Path = "/Visitas"
+                };
+
+                return View("ErrorHandler");
+            }
+        }
+
+        //public IActionResult Edit(string id, string name, string email, string photopath, int role, string logo, string homecode, string phone, string placalibre, string cedula)
+        //{
+
+        //     User edited = new User
+        //     {
+        //         Id = id,
+        //         Name = name,
+        //         Email = email,
+        //         PhotoPath = photopath,
+        //         Role = role,
+        //         Logo = logo,
+        //         HomeCode = homecode,
+        //         Phone = phone,
+        //         PlacaLibre = placalibre,
+        //         Cedula = cedula
+        //     };
+
+        //     ViewBag.Edited = edited;
+        //     return View();
+        //}
+
+        //// POST
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult EditUser(string id, string name, string email, string photopath, int role, string logo, string homecode, string phone, string placalibre, string cedula)
+        //{
+        //     try
+        //     {
+        //         UsersHandler usersHandler = new UsersHandler();
+
+        //         bool result = usersHandler.Edit(id, name, email, photopath, role, logo, homecode, phone, placalibre, cedula).Result;
+
+        //         return GetUsers();
+        //     }
+        //     catch (FirebaseStorageException ex)
+        //     {
+        //         ViewBag.Error = new ErrorHandler()
+        //         {
+        //             Title = ex.Message,
+        //             ErrorMessage = ex.InnerException?.Message,
+        //             ActionMessage = "Go to Home",
+        //             Path = "/Admin"
+        //         };
+
+        //         return View("ErrorHandler");
+        //     }
+        //}
 
     }
 }

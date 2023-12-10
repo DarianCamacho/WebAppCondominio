@@ -81,7 +81,7 @@ namespace WebAppCondominio.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Expenses");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (FirebaseAuthHttpException ex)

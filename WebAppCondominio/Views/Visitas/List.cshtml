@@ -21,6 +21,24 @@
         });
     </script>
 
+    <script>
+        function showEditForm(VisitId, cedula, name, vehicle, brand, model, color, date) {
+            // Completa los campos del formulario con los datos de la tarjeta
+            document.getElementById('edit-VisitId').value = VisitId;
+            document.getElementById('edit-cedula').value = cedula;
+            document.getElementById('edit-name').value = name;
+            document.getElementById('edit-vehicle').value = vehicle;
+            document.getElementById('edit-brand').value = brand;
+            document.getElementById('edit-model').value = model;
+            document.getElementById('edit-color').value = color;
+            document.getElementById('edit-date').value = date;
+
+            // Desplaza la página hacia el formulario de edición
+            document.getElementById('edit-form-container').style.display = 'block';
+            window.location.href = '#edit-form-container'; // Desplaza la página
+        }
+    </script>
+
     <style>
         .Mybutton {
             padding: 1.3em 3em;
@@ -84,7 +102,7 @@
                         </ul>
                         <div class="options">
                             <div class="option">
-                                <a class="btn btn-primary" href="#" onclick="window.location='/Visitas/Edit/@item.Id?Cedula=@item.Cedula&Name=@item.Name&Vehicle=@item.Vehicle&Brand=@item.Brand&Model=@item.Model&Color=@item.Color&Date=@item.Date'">Editar</a>
+                                <button class="btn btn-warning mr-2 edit-button" onclick="showEditForm('@item.Id', '@item.Cedula', '@item.Name', '@item.Vehicle', '@item.Brand', '@item.Model', '@item.Color', '@item.Date')">Editar</button>
                             </div>
                             <div class="option">
                                 <form id="deleteForm-@item.Cedula" asp-controller="Visitas" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
@@ -115,7 +133,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                    <form asp-controller="Admin" asp-action="Delete" asp-route-userId="@item.Id" method="post">
+                                    <form asp-controller="Visitas" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
                                         <input type="submit" value="Sí, Eliminar" class="btn btn-danger" />
                                     </form>
                                 </div>
@@ -125,6 +143,46 @@
                 }
             </div>
         </div>
+
+        <div id="edit-form-container" style="display: none;">
+            <div class="container">
+                <h2 class="my-4">Edit Visit</h2>
+                <form asp-controller="Visitas" asp-action="EditVisits" method="post">
+                    <input type="hidden" name="VisitId" id="edit-VisitId" value="" />
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="edit-cedula" name="cedula" required />
+                        <label for="edit-cedula">Cedula:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="edit-name" name="name" required />
+                        <label for="edit-name">Nombre:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="edit-vehicle" name="vehicle" required />
+                        <label for="edit-vehicle">Tipo de vehiculo:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="edit-brand" name="brand" required />
+                        <label for="edit-brand">Marca:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="edit-model" name="model" required />
+                        <label for="edit-model">Modelo:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="edit-color" name="color" required />
+                        <label for="edit-color">Color:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="edit-date" name="date" required />
+                        <label for="edit-date">Fecha de visita:</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
         <p></p>
         <div>
             <button id="myButton" class="Mybutton" data-url="/Visitas/Visitas">

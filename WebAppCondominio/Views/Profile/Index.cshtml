@@ -39,7 +39,7 @@
 										<div class="flex-grow-1 ms-3">
 											<h5 class="mb-1">@ViewBag.User.Name</h5>
 											<input class="form-control" id="readOnlyInput" type="text" placeholder="@ViewBag.User.Email" readonly="">
-											<p class="mb-2 pb-1" style="color: #2b2a2a;">@ViewBag.User.Cedula</p>
+											<br/>
 											<div class="d-flex justify-content-start rounded-3 p-2 mb-2"
 												 style="background-color: #efefef;">
 												<div>
@@ -47,12 +47,12 @@
 													<p class="mb-0">@ViewBag.User.Phone</p>
 												</div>
 												<div class="px-3">
-													<p class="small text-muted mb-1">House</p>
-													<p class="mb-0">976</p>
+													<p class="small text-muted mb-1">HomeCode</p>
+													<p class="mb-0">@ViewBag.User.HomeCode</p>
 												</div>
 												<div>
 													<p class="small text-muted mb-1">Id</p>
-													<p class="mb-0">8.5</p>
+													<p class="mb-0">@ViewBag.User.Cedula</p>
 												</div>
 											</div>
 											<div class="d-flex pt-1">
