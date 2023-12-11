@@ -32,13 +32,13 @@
                         @foreach (var @item in @ViewBag.Deliverys)
                         {
                             <div class="card mb-3">
-                                <h3 class="card-header"><i class="bi bi-bookmark-heart"></i>Delivery</h3>
+                                <h3 class="card-header"><i class="bi bi-basket-fill"></i></h3>
                                 <svg href="" class="d-block user-select-none" width="100%" height="50" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
                                     <rect width="100%" height="100%" fill="#868e96"></rect>
                                     <text x="50%" y="50%" fill="#dee2e6" dy=".3em">@item.Id</text>
                                 </svg>
                                 <div class="card-body">
-                                    <h5 class="card-title">Nombre</h5>
+                                    <h5 class="card-title">Delivery</h5>
                                     <h6 class="card-subtitle text-muted">@item.DeliveryId</h6>
                                 </div>
                                 <ul class="list-group list-group-flush">

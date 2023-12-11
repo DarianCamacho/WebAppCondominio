@@ -3,5 +3,88 @@
 *@
 @{
     ViewData["Title"] = "Viewed";
+    Layout = "_LayoutSecurity";
 }
 
+<body>
+    <br />
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p class="mb-0 gradient-text">Proyecto Habitacional Seleccionado</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            AVC
+        </figcaption>
+    </figure>
+    <div class="card mb-3">
+        <h3 class="card-header">Usuario</h3>
+        <div class="form-group">
+            <fieldset disabled="">
+                <input class="form-control" id="disabledInput" type="text" placeholder="@ViewBag.Viewed.Id" disabled="">
+            </fieldset>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Nombre</h5>
+            <h6 class="card-subtitle text-muted">@ViewBag.Viewed.Name</h6>
+        </div>
+        <svg href="" class="d-block user-select-none" width="100%" height="50" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+            <rect width="100%" height="100%" fill="#868e96"></rect>
+            <text x="50%" y="50%" fill="#dee2e6" dy=".3em"></text>
+        </svg>
+        <div class="card-body">
+            <h5 class="card-text">Cedula</h5>
+            <p class="card-title">@ViewBag.Viewed.Cedula</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@ViewBag.Viewed.Logo</li>
+            <li class="list-group-item">@ViewBag.Viewed.HomeCode</li>
+            <li class="list-group-item">@ViewBag.Viewed.Phone</li>
+            <li class="list-group-item">@ViewBag.Viewed.PlacaLibre</li>
+        </ul>
+    </div>
+    <br />
+   @*  <div class="centered-container">
+        <div class="content-box">
+            <div class="card">
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="visits-form">
+                            <h2>Aquí puedes modificar los datos de tu visita</h2>
+                            <form asp-controller="Visitas" asp-action="EditVisit">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="cedula" name="cedula" value="@ViewBag.Edited.Cedula" required>
+                                    <label for="id">Cedula:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="name" name="name" value="@ViewBag.Edited.Name" required>
+                                    <label for="name">Nombre:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="vehicle" name="vehicle" value="@ViewBag.Edited.Vehicle" required>
+                                    <label for="vehicle">Tipo de vehículo:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="brand" name="brand" value="@ViewBag.Edited.Brand" required>
+                                    <label for="brand">Marca de vehículo:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="model" name="model" value="@ViewBag.Edited.Model" required>
+                                    <label for="model">Modelo de vehículo:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="color" name="color" value="@ViewBag.Edited.Color" required>
+                                    <label for="color">Color de vehículo:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="date" name="date" value="@ViewBag.Edited.Date" required>
+                                    <label for="date">Fecha de visita:</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> *@
+</body>

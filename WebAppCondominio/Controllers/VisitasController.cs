@@ -21,7 +21,23 @@ namespace WebAppCondominio.Controllers
 				return RedirectToAction("Index", "Error");
 
 			ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+			if (ViewBag.User is Models.User user)
+			{
+				if (user.Role != 0)
+				{
+					//Redirige a la página de error si el usuario no tiene un rol válido
 
+					return RedirectToAction("Index", "Error");
+				}
+
+				ViewBag.Role = user.Role;
+			}
+			else
+			{
+				//Redirigir a la pagina que se selecciono
+
+				return RedirectToAction("Index", "Admin");
+			}
 			//Muestra el get en la vista
 			return GetVisits();
 		}
@@ -41,13 +57,30 @@ namespace WebAppCondominio.Controllers
 
 		public IActionResult List()
 		{
-			ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+                return RedirectToAction("Index", "Error");
 
-			if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
-				return RedirectToAction("List", "Error");
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+            if (ViewBag.User is Models.User user)
+            {
+                if (user.Role != 0)
+                {
+                    //Redirige a la página de error si el usuario no tiene un rol válido
 
-			//Muestra el get en la vista
-			return GetVisits();
+                    return RedirectToAction("Index", "Error");
+                }
+
+                ViewBag.Role = user.Role;
+            }
+            else
+            {
+                //Redirigir a la pagina que se selecciono
+
+                return RedirectToAction("Index", "Admin");
+            }
+
+            //Muestra el get en la vista
+            return GetVisits();
 		}
 
 
@@ -132,53 +165,6 @@ namespace WebAppCondominio.Controllers
 			}
 		}
 
-		//public IActionResult EditVisit(string id, string cedula, string name, string vehicle, string brand, string model, string color, string date)
-		//{
-		//    try
-		//    {
-		//        VisitsHandler visitsHandler = new VisitsHandler();
-
-		//        bool result = visitsHandler.Edit(id, cedula, name, vehicle, brand, model, color, date).Result;
-
-		//        return GetVisits();
-		//    }
-
-		//    catch (FirebaseStorageException ex)
-		//    {
-		//        ViewBag.Error = new ErrorHandler()
-		//        {
-		//            Title = ex.Message,
-		//            ErrorMessage = ex.InnerException?.Message,
-		//            ActionMessage = "Go to index",
-		//            Path = "/List"
-		//        };
-
-		//        return View("ErrorHandler");
-		//    }
-		//}
-
-		//public IActionResult Edit(string id, string cedula, string name, string vehicle, string brand, string model, string color, string date)
-		//{
-		//    ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
-
-		//    Visit edited = new Visit
-		//    {
-		//        Id = id,
-		//        Cedula = cedula,
-		//        Name = name,
-		//        Vehicle = vehicle,
-		//        Brand = brand,
-		//        Model = model,
-		//        Color = color,
-		//        Date = date
-		//    };
-
-		//    ViewBag.Edited = edited;
-
-		//    //Muestra el get en la vista
-		//    return View();
-		//}
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(string VisitId)
@@ -208,21 +194,23 @@ namespace WebAppCondominio.Controllers
 		{
 			ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
-			//if (ViewBag.User is Models.User user)
-			//{
-			//	if (user.Role != 0)
-			//	{
-			//		Redirige a la página de error si el usuario no tiene un rol válido
-			//		return RedirectToAction("Index", "Error");
-			//	}
+			if (ViewBag.User is Models.User user)
+			{
+				if (user.Role != 0)
+				{
+					//Redirige a la página de error si el usuario no tiene un rol válido
 
-			//	/*	ViewBag.Role = user.Role;*/
-			//}
-			//else
-			//{
-			//	Redirigir a la pagina que se selecciono
-			//	return RedirectToAction("Visitas", "Visitas");
-			//}
+					return RedirectToAction("Index", "Error");
+				}
+
+				ViewBag.Role = user.Role;
+			}
+			else
+			{
+				//Redirigir a la pagina que se selecciono
+
+				return RedirectToAction("Index", "Admin");
+			}
 
 			return View();
 		}

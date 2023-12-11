@@ -15,12 +15,23 @@ namespace WebAppCondominio.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("Index", "Error");
 
+            if (ViewBag.User is Models.User user)
+            {
+                if (user.Role != 0)
+                {
+                    //Redirige a la página de error si el usuario no tiene un rol válido
 
-            //Si el usuario tiene un rol de 0 no se podra ver el Index de Visitas
-            //if (user.Role == 0)
-            //    return RedirectToAction("Index", "Error");
+                    return RedirectToAction("Index", "Error");
+                }
 
-            //ViewBag.Role = user.Role;
+                ViewBag.Role = user.Role;
+            }
+            else
+            {
+                //Redirigir a la pagina que se selecciono
+
+                return RedirectToAction("Index", "Admin");
+            }
 
             //Muestra el get en la vista
             return View();
@@ -37,19 +48,29 @@ namespace WebAppCondominio.Controllers
 
         public IActionResult Favorites()
         {
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
                 return RedirectToAction("Index", "Error");
 
-            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+            if (ViewBag.User is Models.User user)
+            {
+                if (user.Role != 0)
+                {
+                    //Redirige a la página de error si el usuario no tiene un rol válido
 
-            //Si el usuario tiene un rol de 0 no se podra ver el Index de Visitas
-            //if (user.Role == 0)
-            //    return RedirectToAction("Index", "Error");
+                    return RedirectToAction("Index", "Error");
+                }
 
-            //ViewBag.Role = user.Role;
+                ViewBag.Role = user.Role;
+            }
+            else
+            {
+                //Redirigir a la pagina que se selecciono
 
-            //Muestra el get en la vista
+                return RedirectToAction("Index", "Admin");
+            }
+
             return GetFavorites();
         }
 

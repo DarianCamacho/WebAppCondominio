@@ -63,7 +63,25 @@ namespace WebAppCondominio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string UserId)
         {
-            try
+			if (ViewBag.User is Models.User user)
+			{
+				if (user.Role != 1)
+				{
+					//Redirige a la página de error si el usuario no tiene un rol válido
+
+					return RedirectToAction("Index", "Error");
+				}
+
+				ViewBag.Role = user.Role;
+			}
+			else
+			{
+				//Redirigir a la pagina que se selecciono
+
+				return RedirectToAction("Index", "Admin");
+			}
+
+			try
             {
                 // Primero, obtén la referencia al documento de la tarjeta que deseas eliminar en Firebase
                 var cardDocRef = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId)
