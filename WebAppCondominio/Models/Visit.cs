@@ -16,7 +16,8 @@ namespace WebAppCondominio.Models
 		public string? Model { get; set; }
 		public string? Color { get; set; }
 		public string? Date { get; set; }
-	}
+        public string? Acceso { get; set; }
+    }
 
 
 	public class VisitsHandler
@@ -42,13 +43,14 @@ namespace WebAppCondominio.Models
 					Model = data["Model"].ToString(),
 					Color = data["Color"].ToString(),
 					Date = data["Date"].ToString(),
-				});
+                    Acceso = data["Date"].ToString()
+                });
 			}
 
 			return visitsList;
 		}
 
-		public async Task<bool> Create(string cedula, string name, string vehicle, string brand, string model, string color, string date)
+		public async Task<bool> Create(string cedula, string name, string vehicle, string brand, string model, string color, string date, int acceso)
 		{
 			try
 			{
@@ -62,8 +64,9 @@ namespace WebAppCondominio.Models
 									{ "Brand",  brand },
 									{ "Model", model },
 									{ "Color", color },
-									{ "Date", date }
-						 });
+									{ "Date", date },
+                                    { "Acceso", acceso }
+                         });
 
 				return true;
 			}
@@ -73,7 +76,7 @@ namespace WebAppCondominio.Models
 			}
 		}
 
-		public async Task<bool> Edit(string id, string cedula, string name, string vehicle, string brand, string model, string color, string date)
+		public async Task<bool> Edit(string id, string cedula, string name, string vehicle, string brand, string model, string color, string date, int acceso)
 		{
 			try
 			{
@@ -87,8 +90,9 @@ namespace WebAppCondominio.Models
 				   { "Brand",  brand },
 				   { "Model", model },
 				   { "Color", color },
-				   { "Date", date }
-				};
+				   { "Date", date },
+                   { "Acceso", acceso }
+                };
 
 				WriteResult result = await docRef.UpdateAsync(dataToUpdate);
 

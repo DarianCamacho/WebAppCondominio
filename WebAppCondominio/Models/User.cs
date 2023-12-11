@@ -36,20 +36,49 @@ namespace WebAppCondominio.Models
                     Id = item.Id,
                     Name = data["Name"].ToString(),
                     Email = data["Email"].ToString(),
-                    PhotoPath= data["PhotoPath"].ToString(),
-					Role = Convert.ToInt16(data["Role"]),
-					Logo = data["Logo"].ToString(),
+                    PhotoPath = data["PhotoPath"].ToString(),
+                    Role = Convert.ToInt16(data["Role"]),
+                    Logo = data["Logo"].ToString(),
                     HomeCode = data["HomeCode"].ToString(),
-					Phone = data["Phone"].ToString(),
-					PlacaLibre = data["PlacaLibre"].ToString(),
-					Cedula = data["Cedula"].ToString(),
-				});
+                    Phone = data["Phone"].ToString(),
+                    PlacaLibre = data["PlacaLibre"].ToString(),
+                    Cedula = data["Cedula"].ToString(),
+                });
             }
 
             return usersList;
         }
 
         public async Task<bool> Edit(string id, string name, string email, string photopath, int role, string logo, string homecode, string phone, string placalibre, string cedula)
+        {
+            try
+            {
+                FirestoreDb db = FirestoreDb.Create(FirebaseAuthHelper.firebaseAppId);
+                DocumentReference docRef = db.Collection("Users").Document(id);
+                Dictionary<string, object> dataToUpdate = new Dictionary<string, object>
+                {
+                    {"Name", name },
+                    {"Email", email },
+                    {"PhotoPath", photopath },
+                    {"Role", role },
+                    {"Logo", logo },
+                    {"HomeCode", homecode },
+                    {"Phone", phone },
+                    {"PlacaLibre", placalibre },
+                    {"Cedula", cedula }
+                };
+
+                WriteResult result = await docRef.UpdateAsync(dataToUpdate);
+
+                return true;
+            }
+            catch (FirebaseStorageException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> View(string id, string name, string email, string photopath, int role, string logo, string homecode, string phone, string placalibre, string cedula)
         {
             try
             {

@@ -9,7 +9,7 @@ namespace WebAppCondominio.Controllers
 {
     public class DeliverysController : Controller
     {
-        // GET: FavoritosController
+        // GET: DeliveryController
         public IActionResult Index()
         {
             ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));

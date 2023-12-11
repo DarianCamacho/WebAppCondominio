@@ -63,13 +63,13 @@ namespace WebAppCondominio.Controllers
 		// POST
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create(string cedula, string name, string vehicle, string brand, string model, string color, string date)
+		public IActionResult Create(string cedula, string name, string vehicle, string brand, string model, string color, string date, int acceso)
 		{
 			try
 			{
 				VisitsHandler visitsHandler = new VisitsHandler();
 
-				bool result = visitsHandler.Create(cedula, name, vehicle, brand, model, color, date).Result;
+				bool result = visitsHandler.Create(cedula, name, vehicle, brand, model, color, date, acceso).Result;
 
 				return GetVisits();
 			}
@@ -90,7 +90,7 @@ namespace WebAppCondominio.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> EditVisits(string VisitId, string cedula, string name, string vehicle, string brand, string model, string color, string date)
+		public async Task<IActionResult> EditVisits(string VisitId, string cedula, string name, string vehicle, string brand, string model, string color, string date, int acceso)
 		{
 			try
 			{
@@ -108,8 +108,9 @@ namespace WebAppCondominio.Controllers
 					{ "Brand", brand },
 					{ "Model", model },
 					{ "Color", color },
-					{ "Date", date }
-				};
+					{ "Date", date },
+					{ "Acceso", acceso }
+                };
 
 				// Update the visit document with the updated data
 				await visitDocRef.UpdateAsync(updatedVisitData);
@@ -232,5 +233,35 @@ namespace WebAppCondominio.Controllers
 
 			return View();
 		}
-	}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateAccess(string VisitId)
+        {
+            try
+            {
+                var upDocRef = FirestoreDb.Create("condominio-cc812")
+                    .Collection("Visits")
+                    .Document(VisitId);
+
+                var upSnapshot = await upDocRef.GetSnapshotAsync();
+
+                if (upSnapshot.Exists)
+                {
+                    var upData = upSnapshot.ToDictionary();
+                    bool acceso = upData.ContainsKey("Acceso") ? Convert.ToBoolean(upData["Acceso"]) : false;
+
+                    await upDocRef.UpdateAsync("Acceso", !acceso);
+                }
+
+                return RedirectToAction("VisitCheck", "Security");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating task status: " + ex.Message);
+                return View();
+            }
+        }
+
+    }
 }

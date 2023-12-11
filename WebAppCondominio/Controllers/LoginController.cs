@@ -75,9 +75,9 @@ namespace WebAppCondominio.Controllers
                 //Aqui guardamos los datos del usuario en la session en formato json
                 HttpContext.Session.SetString("userSession", JsonConvert.SerializeObject(user));
 
-                if (user.Role == 0)
+                if (user.Role == 2)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Security");
                 }
                 else
                 {

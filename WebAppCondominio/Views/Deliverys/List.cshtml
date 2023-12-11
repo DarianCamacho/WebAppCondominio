@@ -25,45 +25,33 @@
 <body>
     <div class="centered-container">
         <div class="content-box">
-            <a asp-controller="Favorites" asp-action="Index" class="btn btn-primary">Crear una nueva visita favorita</a>
-            <div class="centered-container">
-            <p></p>
-                <div class="content-box">
                     <div class="card">
                         <div class="card-header">
                             <input class="form-control" id="myInput" type="text" placeholder="Search..">
                         </div>
-                        @foreach (var @item in @ViewBag.Favorites)
+                        @foreach (var @item in @ViewBag.Deliverys)
                         {
                             <div class="card mb-3">
-                                <h3 class="card-header"><i class="bi bi-bookmark-heart"></i>Visita</h3>
+                                <h3 class="card-header"><i class="bi bi-bookmark-heart"></i>Delivery</h3>
                                 <svg href="" class="d-block user-select-none" width="100%" height="50" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
                                     <rect width="100%" height="100%" fill="#868e96"></rect>
                                     <text x="50%" y="50%" fill="#dee2e6" dy=".3em">@item.Id</text>
                                 </svg>
                                 <div class="card-body">
                                     <h5 class="card-title">Nombre</h5>
-                                    <h6 class="card-subtitle text-muted">@item.Name</h6>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-text">Cedula</h5>
-                                    <p class="card-title">@item.Cedula</p>
+                                    <h6 class="card-subtitle text-muted">@item.DeliveryId</h6>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">@item.Brand</li>
-                                    <li class="list-group-item">@item.Model</li>
                                     <li class="list-group-item">@item.Vehicle</li>
-                                    <li class="list-group-item">@item.Color</li>
+                                    <li class="list-group-item">@item.Items</li>
+                                    <li class="list-group-item">@item.Date</li>
                                 </ul>
                                 <div class="options">
-        @*                             <div class="option">
-                                        <a class="btn btn-primary" onclick="window.location='/Visitas/Edit/@item.Id?Cedula=@item.Cedula&Name=@item.Name&Vehicle=@item.Vehicle&Brand=@item.Brand&Model=@item.Model&Color=@item.Color&Date=@item.Date'">Editar</a>
-                                    </div>
-                                    <div class="option">
-                                        <form id="deleteForm-@item.Cedula" asp-controller="Visitas" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
-                                            <a type="submit" value="Delete" class="btn btn-danger delete-button" href="#">Delete</a>
-                                        </form>
-                                    </div> *@
+                            <div class="option">
+                                <form id="deleteForm-@item.DeliveryId" asp-controller="Deliverys" asp-action="Delete" asp-route-delyId="@item.Id" method="post">
+                                    <a type="submit" value="Delete" class="btn btn-danger delete-button" href="#">Delete</a>
+                                </form>
+                            </div>
                                 </div>
                                 <div class="card-footer text-muted">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-week" viewBox="0 0 16 16">
@@ -88,7 +76,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                            <form asp-controller="Visitas" asp-action="Delete" asp-route-visitId="@item.Id" method="post">
+                                            <form asp-controller="Deliverys" asp-action="Delete" asp-route-delyId="@item.Id" method="post">
                                                 <input type="submit" value="Sí, Eliminar" class="btn btn-danger" />
                                             </form>
                                         </div>
@@ -102,7 +90,7 @@
          </div>
         <p></p>
         <div>
-            <button id="myButton" class="Mybutton" data-url="/Visitas/Visitas">
+            <button id="myButton" class="Mybutton" data-url="/Delivery/Index">
                 Volver
             </button>
         </div>
