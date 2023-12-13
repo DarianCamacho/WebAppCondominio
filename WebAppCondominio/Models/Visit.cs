@@ -16,7 +16,7 @@ namespace WebAppCondominio.Models
 		public string? Model { get; set; }
 		public string? Color { get; set; }
 		public string? Date { get; set; }
-        public string? Acceso { get; set; }
+        public int? Acceso { get; set; }
     }
 
 
@@ -43,7 +43,7 @@ namespace WebAppCondominio.Models
 					Model = data["Model"].ToString(),
 					Color = data["Color"].ToString(),
 					Date = data["Date"].ToString(),
-                    Acceso = data["Date"].ToString()
+                    Acceso = Convert.ToInt16(data["Acceso"])
                 });
 			}
 

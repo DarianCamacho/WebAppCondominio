@@ -19,7 +19,7 @@
                         <th>Marca</th>
                         <th>Modelo</th>
                         <th>Color</th>
-                        <th>Acceso permitido?</th>
+                        <th>Tiene el acceso permitido?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,38 +33,18 @@
                             <td>@item.Model</td>
                             <td>@item.Color</td>
                             <td>
-                                @if (!string.IsNullOrEmpty(@item.Acceso))
+                                @if (Convert.ToBoolean(@item.Acceso))
                                 {
-                                    int? accesoValue = null;
-                                    if (int.TryParse(@item.Acceso, out int result))
-                                    {
-                                        accesoValue = result;
-                                    }
-
-                                    if (accesoValue.HasValue)
-                                    {
-                                        if (accesoValue == 1)
-                                        {
-                                            <span>Si, puede pasar</span>
-                                        }
-                                        else
-                                        {
-                                            <form asp-controller="Visitas" asp-action="UpdateAccess" method="post">
-                                                <input type="hidden" name="VisitId" value="@item.Id" />
-                                                <label>
-                                                    <input type="checkbox" name="completed" onchange="this.form.submit()" /> Dar acceso
-                                                </label>
-                                            </form>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <span>Estado de acceso no definido</span>
-                                    }
+                                    <span>Si</span>
                                 }
                                 else
                                 {
-                                    <span>Estado de acceso no definido</span>
+                                    <form asp-controller="Visitas" asp-action="UpdateAccess" method="post">
+                                        <input type="hidden" name="VisitId" value="@item.Id" />
+                                        <label>
+                                            <input type="checkbox" name="completed" onchange="this.form.submit()" /> Darle acceso
+                                        </label>
+                                    </form>
                                 }
                             </td>
                         </tr>

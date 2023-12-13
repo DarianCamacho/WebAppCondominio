@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-string path = "C:\\Users\\delga\\source\\repos\\WebAppCondominio\\WebAppCondominio\\firebase-config.json";
+string path = "C:\\Users\\angel\\Source\\Repos\\WebAppCondominio\\WebAppCondominio\\firebase-config.json";
 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
 builder.Services.AddSession(options =>

@@ -81,6 +81,18 @@ namespace WebAppCondominio.Controllers
                 }
                 else
                 {
+                    if (user.Role == 3)
+                    {
+                        //Send email only when role is 3
+                        SmtpParams smtp = new SmtpParams
+                        {
+                            ReceiverEmail = taskUser.User.Info.Email,
+                            ClientName = taskUser.User.Info.DisplayName
+                        };
+
+                        Email.EmailSender.SendEmail(smtp);
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -126,14 +138,14 @@ namespace WebAppCondominio.Controllers
                 };
                 WriteResult result = await docRef.UpdateAsync(dataToUpdate);
 
-                //Send email
-                SmtpParams smtp = new SmtpParams
-                {
-                    ReceiverEmail = taskUser.User.Info.Email,
-                    ClientName = taskUser.User.Info.DisplayName
-                };
+                ////Send email
+                //SmtpParams smtp = new SmtpParams
+                //{
+                //    ReceiverEmail = taskUser.User.Info.Email,
+                //    ClientName = taskUser.User.Info.DisplayName
+                //};
 
-                Email.EmailSender.SendEmail(smtp);
+                //Email.EmailSender.SendEmail(smtp);
 
                 return View("Index");
             }

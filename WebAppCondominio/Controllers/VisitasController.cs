@@ -228,18 +228,18 @@ namespace WebAppCondominio.Controllers
         {
             try
             {
-                var upDocRef = FirestoreDb.Create("condominio-cc812")
+                var taskDocRef = FirestoreDb.Create("condominio-cc812")
                     .Collection("Visits")
                     .Document(VisitId);
 
-                var upSnapshot = await upDocRef.GetSnapshotAsync();
+                var taskSnapshot = await taskDocRef.GetSnapshotAsync();
 
-                if (upSnapshot.Exists)
+                if (taskSnapshot.Exists)
                 {
-                    var upData = upSnapshot.ToDictionary();
-                    bool acceso = upData.ContainsKey("Acceso") ? Convert.ToBoolean(upData["Acceso"]) : false;
+                    var taskData = taskSnapshot.ToDictionary();
+                    bool acceso = taskData.ContainsKey("Acceso") ? Convert.ToBoolean(taskData["Acceso"]) : false;
 
-                    await upDocRef.UpdateAsync("Acceso", !acceso);
+                    await taskDocRef.UpdateAsync("Acceso", !acceso);
                 }
 
                 return RedirectToAction("VisitCheck", "Security");
